@@ -1,0 +1,85 @@
+query Team($teamID: ID!) {
+  discoverTeam(teamID: $teamID) {
+    ...BookmarkedTeam
+    logo {
+      ...Image
+    }
+    name
+    season {
+      id
+      name
+      competition {
+        id
+        name
+        organisation {
+          id
+          name
+          type
+        }
+      }
+      status {
+        name
+        value
+      }
+    }
+    organisation {
+      id
+      name
+      type
+      logo {
+        ...Image
+      }
+    }
+    grade {
+      id
+      name
+      season {
+        competition {
+          organisation {
+            id
+          }
+        }
+      }
+    }
+  }
+}
+
+fragment BookmarkedTeam on DiscoverTeam {
+  id
+  name
+  logo {
+    ...Image
+  }
+  organisation {
+    id
+    name
+  }
+  grade {
+    id
+    name
+  }
+  season {
+    id
+    name
+    startDate
+    endDate
+    status {
+      name
+      value
+    }
+    competition {
+      id
+      name
+    }
+  }
+}
+
+fragment Image on Image {
+  sizes {
+    url
+    dimensions {
+      height
+      width
+    }
+  }
+}

@@ -1,0 +1,150 @@
+query Season(
+  $seasonId: String!
+  $isClub: Boolean!
+  $filter: DiscoverTeamsFilter!
+) {
+  discoverSeason(seasonID: $seasonId) {
+    ...SeasonHeader
+    grades @skip(if: $isClub) {
+      ...SeasonGradesGrade
+      ...GradeFilterModalGrade
+      ...BookmarkedGrade
+    }
+  }
+  tenantConfiguration {
+    ...GradeFilterModalTenantConfiguration
+  }
+  discoverTeams(filter: $filter) @include(if: $isClub) {
+    ...SeasonTeams
+  }
+}
+
+fragment SeasonHeader on DiscoverSeason {
+  id
+  name
+  startDate
+  endDate
+  competition {
+    id
+    name
+    organisation {
+      id
+      name
+      logo {
+        ...Image
+      }
+    }
+  }
+  status {
+    name
+    value
+  }
+}
+
+fragment Image on Image {
+  sizes {
+    url
+    dimensions {
+      height
+      width
+    }
+  }
+}
+
+fragment SeasonGradesGrade on DiscoverGrade {
+  ...GradeFilterModalGrade
+  id
+  name
+  day {
+    name
+    value
+  }
+  gender {
+    name
+    value
+  }
+  age {
+    name
+    value
+  }
+}
+
+fragment GradeFilterModalGrade on DiscoverGrade {
+  id
+  day {
+    name
+    value
+  }
+  gender {
+    name
+    value
+  }
+  age {
+    name
+    value
+  }
+}
+
+fragment BookmarkedGrade on DiscoverGrade {
+  id
+  name
+  age {
+    value
+  }
+  day {
+    value
+  }
+  gender {
+    value
+  }
+  season {
+    id
+    name
+    endDate
+    status {
+      name
+      value
+    }
+    competition {
+      id
+      name
+      organisation {
+        id
+        name
+        type
+      }
+    }
+  }
+}
+
+fragment GradeFilterModalTenantConfiguration on TenantConfiguration {
+  competition {
+    ageGroups {
+      name
+      value
+    }
+    genders {
+      name
+      value
+    }
+  }
+}
+
+fragment SeasonTeams on DiscoverTeam {
+  id
+  name
+  logo {
+    ...Image
+  }
+  grade {
+    name
+  }
+  ageGroup {
+    name
+    value
+  }
+  gender {
+    name
+    value
+  }
+}

@@ -1,0 +1,132 @@
+query GradeLadder($gradeID: ID!, $teamID: ID) {
+  discoverGrade(gradeID: $gradeID) {
+    id
+    name
+    ladderType
+    ladder(filter: { teamID: $teamID }) {
+      pool {
+        id
+        name
+      }
+      generatedFrom {
+        id
+        name
+      }
+      standings {
+        ...LadderStanding
+      }
+      gameTypeValue
+    }
+    gameTypes {
+      name
+      value
+      ladderFields {
+        shortName
+        key
+        toolTip
+        extendedToolTip
+        type
+        displayOrder
+        dataType
+        decimals
+      }
+      ladderRankingFields {
+        fullName
+        sortOrder
+      }
+      ladderType
+    }
+    overallLadder {
+      ladderType
+    }
+    overallLadderFields {
+      shortName
+      key
+      toolTip
+      type
+      displayOrder
+      dataType
+      decimals
+    }
+    overallLadderRankingFields {
+      fullName
+      shortName
+      key
+      sortOrder
+      toolTip
+    }
+    teamConferences {
+      id
+      name
+    }
+  }
+}
+
+fragment LadderStanding on LadderStanding {
+  ...LadderStandingTeam
+  ...LadderStandingFieldKeys
+}
+
+fragment LadderStandingTeam on LadderStanding {
+  team {
+    id
+    name
+    logo {
+      ...Image
+    }
+    conference {
+      id
+      name
+    }
+  }
+}
+
+fragment Image on Image {
+  sizes {
+    url
+    dimensions {
+      height
+      width
+    }
+  }
+}
+
+fragment LadderStandingFieldKeys on LadderStanding {
+  adjustments
+  alternatePercentage
+  bonusPoints
+  byes
+  competitionPoints
+  disqualifications
+  drawn
+  forfeits
+  losingBonus
+  lossFirstInnings
+  lossOutright
+  lost
+  matchRatio
+  netRunRate
+  noResults
+  oversBowled
+  oversFaced
+  percentage
+  played
+  pointsAgainst
+  pointsAverage
+  pointsDifference
+  pointsFor
+  pointsWonPercentage
+  quotient
+  runsAgainst
+  runsFor
+  ties
+  triesAgainst
+  triesFor
+  tryBonus
+  tryDifference
+  wicketsLost
+  wicketsTaken
+  winFirstInnings
+  winOutright
+  won
+}

@@ -1,0 +1,33 @@
+query OrganisationCompetitions($organisationId: ID!) {
+  discoverCompetitions(organisationID: $organisationId) {
+    seasons(organisationID: $organisationId) {
+      startDate
+      endDate
+      status {
+        name
+        value
+      }
+      name
+      id
+    }
+    name
+    id
+    organisation {
+      id
+      name
+      logo {
+        ...Image
+      }
+    }
+  }
+}
+
+fragment Image on Image {
+  sizes {
+    url
+    dimensions {
+      height
+      width
+    }
+  }
+}

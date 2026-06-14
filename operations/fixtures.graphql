@@ -1,0 +1,13 @@
+query Fixtures($gradeId: ID!) {
+  discoverGrade(gradeID: $gradeId) {
+    rounds {
+      number
+      id
+      isFinalsRound
+      isStale
+      name
+      abbreviatedName
+      provisionalDate
+    }
+  }
+}

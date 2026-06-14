@@ -1,0 +1,48 @@
+query FormGuideTeamFixture($teamID: ID!) {
+  discoverTeamFixture(teamID: $teamID) {
+    ...FormGuideTeamFixtureRound
+  }
+}
+
+fragment FormGuideTeamFixtureRound on DiscoverRound {
+  id
+  name
+  fixture {
+    games {
+      id
+      status {
+        value
+      }
+      home {
+        ... on DiscoverTeam {
+          id
+        }
+      }
+      away {
+        ... on DiscoverTeam {
+          id
+        }
+      }
+      result {
+        winner {
+          value
+        }
+        outcome {
+          value
+        }
+      }
+    }
+  }
+  grade {
+    id
+    name
+    season {
+      id
+      competition {
+        organisation {
+          id
+        }
+      }
+    }
+  }
+}

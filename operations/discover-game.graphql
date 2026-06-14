@@ -1,0 +1,86 @@
+query DiscoverGame($gameID: ID!) {
+  discoverGame(gameID: $gameID) {
+    id
+    status {
+      name
+      value
+    }
+    home {
+      ... on DiscoverTeam {
+        id
+        name
+      }
+    }
+    away {
+      ... on DiscoverTeam {
+        id
+        name
+      }
+    }
+    result {
+      winner {
+        value
+      }
+      home {
+        statistics {
+          count
+          type {
+            value
+          }
+        }
+      }
+      away {
+        statistics {
+          count
+          type {
+            value
+          }
+        }
+      }
+    }
+    statistics {
+      home {
+        players {
+          playerNumber
+          player {
+            ... on DiscoverParticipant {
+              id
+              profile {
+                id
+                firstName
+                lastName
+              }
+            }
+          }
+          statistics {
+            count
+            type {
+              value
+            }
+          }
+        }
+      }
+      away {
+        players {
+          playerNumber
+          player {
+            ... on DiscoverParticipant {
+              id
+              profile {
+                id
+                firstName
+                lastName
+              }
+            }
+          }
+          statistics {
+            count
+            type {
+              value
+            }
+          }
+        }
+      }
+    }
+  }
+}

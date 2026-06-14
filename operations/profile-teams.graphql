@@ -1,0 +1,35 @@
+query ProfileTeams($profileId: ID!) {
+  publicProfileTeams(profileID: $profileId) {
+    id
+    name
+    season {
+      competition {
+        name
+        organisation {
+          name
+        }
+      }
+      name
+      status {
+        name
+        value
+      }
+    }
+    grade {
+      name
+    }
+    logo {
+      ...Image
+    }
+  }
+}
+
+fragment Image on Image {
+  sizes {
+    url
+    dimensions {
+      height
+      width
+    }
+  }
+}

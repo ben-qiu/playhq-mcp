@@ -1,0 +1,32 @@
+{
+  "name": "playhq-mcp",
+  "version": "1.0.0",
+  "private": false,
+  "description": "Unofficial dev-only local MCP server — not affiliated with or authorized by PlayHQ",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ben-qiu/playhq-mcp.git"
+  },
+  "license": "LicenseRef-Personal-Use-Only",
+  "packageManager": "pnpm@10.33.4",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build-mcp.mjs",
+    "start": "node dist/mcp.cjs",
+    "dev": "tsx src/index.ts",
+    "mcp": "tsx src/index.ts",
+    "typecheck": "tsc --noEmit",
+    "postinstall": "node scripts/build-mcp.mjs",
+    "smoke-test": "tsx scripts/smoke-test.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "esbuild": "^0.25.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}

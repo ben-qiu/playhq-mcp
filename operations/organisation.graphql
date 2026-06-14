@@ -1,0 +1,44 @@
+query Organisation($code: String!, $organisationID: ID!) {
+  discoverOrganisation(code: $code) {
+    ...OrganisationHeader
+    ...BookmarkedOrganisation
+    registeredCompetitions {
+      id
+    }
+    type
+    shopVisible
+  }
+  discoverOrganisationPosts(input: { organisationID: $organisationID, limit: 0 }) {
+    meta {
+      totalRecords
+    }
+  }
+}
+
+fragment OrganisationHeader on DiscoverOrganisation {
+  id
+  name
+  type
+  logo {
+    ...Image
+  }
+}
+
+fragment Image on Image {
+  sizes {
+    url
+    dimensions {
+      height
+      width
+    }
+  }
+}
+
+fragment BookmarkedOrganisation on DiscoverOrganisation {
+  id
+  name
+  type
+  logo {
+    ...Image
+  }
+}

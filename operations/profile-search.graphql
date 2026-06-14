@@ -1,0 +1,13 @@
+query ProfileSearch($fullName: String!) {
+  profileSearch(fullName: $fullName) {
+    result {
+      firstName
+      id
+      lastName
+      lastInteractedOrganisation {
+        id
+        name
+      }
+    }
+  }
+}

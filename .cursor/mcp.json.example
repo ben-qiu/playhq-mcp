@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "playhq": {
+      "command": "/bin/bash",
+      "args": ["${workspaceFolder}/scripts/run-mcp.sh"]
+    }
+  }
+}

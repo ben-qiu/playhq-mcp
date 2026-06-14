@@ -1,0 +1,20 @@
+---
+description: PlayHQ organisation IDs for EDJBA and VJBL when querying teams, fixtures, and ladders
+alwaysApply: true
+---
+
+# PlayHQ organisations (basketball-victoria)
+
+In the PlayHQ API, **`code` and `organisationID` are the same value** — an 8-character hex organisation ID. Do **not** pass names like `"VJBL"` or `"EDJBA"` as `code`; resolve them to IDs first.
+
+| organisationId / code | Name | Full name |
+|-----------------------|------|-----------|
+| `0c8a84ea` | **EDJBA** | Eastern District Junior Basketball Association |
+| `08f42de2` | **VJBL** | Victorian Junior Basketball League |
+
+## Usage
+
+- **EDJBA** → `organisationId` = `0c8a84ea`
+- **VJBL** → `organisationId` = `08f42de2`
+
+These appear as `organisation.id` on teams, competitions, and grades. For `get_organisation`, pass the ID (or a known name — the MCP tool resolves names to IDs before calling the API). Use `list_organisations` to look up IDs.

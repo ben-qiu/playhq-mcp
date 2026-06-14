@@ -1,0 +1,17 @@
+query DiscoverGrade($gradeId: ID!) {
+  discoverGrade(gradeID: $gradeId) {
+    id
+    hideScores
+    externalStatisticsUrls {
+      url
+    }
+    dates
+    season {
+      id
+      competition {
+        id
+        type
+      }
+    }
+  }
+}

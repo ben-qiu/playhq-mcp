@@ -1,0 +1,24 @@
+query GetOutswingVersion {
+  tenantConfiguration {
+    outswingConfiguration {
+      version {
+        major
+        minor
+        patch
+        effectiveDate
+      }
+      minimumVersion {
+        major
+        minor
+        patch
+        effectiveDate
+      }
+      unsupportedVersions {
+        major
+        minor
+        patch
+        effectiveDate
+      }
+    }
+  }
+}

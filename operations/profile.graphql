@@ -1,0 +1,152 @@
+query Profile($profileID: ID!) {
+  publicProfile(profileID: $profileID) {
+    firstName
+    id
+    lastName
+    lastInteractedOrganisation {
+      id
+      logo {
+        ...Image
+      }
+      name
+    }
+  }
+  discoverMilestones(input: { profileID: $profileID }) {
+    gameCount
+  }
+  publicProfileStatistics(profileID: $profileID) {
+    careerStatistics {
+      totalStatistics {
+        ...CareerStatistic
+      }
+      clubStatistics {
+        id
+        club {
+          id
+          name
+          logo {
+            ...Image
+          }
+        }
+        statistics {
+          ...CareerStatistic
+        }
+      }
+    }
+    seasonStatistics {
+      name
+      player {
+        hasGamePermit
+      }
+      statistics {
+        season {
+          id
+          name
+          competition {
+            id
+            name
+            organisation {
+              id
+              name
+            }
+          }
+        }
+        role
+        club {
+          id
+          name
+        }
+        totalStatistics {
+          count
+          details {
+            value
+          }
+          gameFormat
+        }
+        teamStatistics {
+          team {
+            ... on DiscoverTeam {
+              id
+              name
+            }
+          }
+          totalStatistics {
+            count
+            details {
+              value
+            }
+            gameFormat
+          }
+        }
+      }
+    }
+  }
+  publicProfileTeams(profileID: $profileID) {
+    ...BookmarkedTeam
+  }
+  tenantConfiguration {
+    label
+    statistics {
+      enabled
+      careerStatisticsMeta {
+        value
+        name
+        shortName
+        isDisplayable
+        statisticType
+      }
+    }
+  }
+}
+
+fragment Image on Image {
+  sizes {
+    url
+    dimensions {
+      height
+      width
+    }
+  }
+}
+
+fragment CareerStatistic on Statistic {
+  count
+  details {
+    ...CareerGameStatistic
+  }
+  gameFormat
+}
+
+fragment CareerGameStatistic on GameStatistic {
+  value
+}
+
+fragment BookmarkedTeam on DiscoverTeam {
+  id
+  name
+  logo {
+    ...Image
+  }
+  organisation {
+    id
+    name
+  }
+  grade {
+    id
+    name
+  }
+  season {
+    id
+    name
+    startDate
+    endDate
+    status {
+      name
+      value
+    }
+    competition {
+      id
+      name
+    }
+  }
+}

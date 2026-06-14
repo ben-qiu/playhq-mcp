@@ -1,0 +1,180 @@
+query TeamFixture($teamID: ID!) {
+  discoverTeam(teamID: $teamID) {
+    id
+    pool {
+      id
+      name
+    }
+    grade {
+      id
+    }
+  }
+  discoverTeamFixture(teamID: $teamID) {
+    ...TeamFixtureRound
+  }
+}
+
+fragment TeamFixtureRound on DiscoverRound {
+  id
+  name
+  provisionalDate
+  isFinalsRound
+  isStale
+  fixture {
+    byes {
+      ...Bye
+    }
+    games {
+      ...Game
+    }
+  }
+  grade {
+    id
+    name
+    hideScores
+    season {
+      id
+      competition {
+        organisation {
+          id
+        }
+      }
+    }
+  }
+}
+
+fragment Bye on DiscoverTeam {
+  name
+  id
+  logo {
+    ...Image
+  }
+}
+
+fragment Image on Image {
+  sizes {
+    url
+    dimensions {
+      height
+      width
+    }
+  }
+}
+
+fragment Game on DiscoverGame {
+  id
+  alias
+  grade {
+    id
+    name
+    hideScores
+  }
+  dates
+  allocation {
+    ...GameAllocation
+  }
+  home {
+    ...GamePossibleTeam
+  }
+  away {
+    ...GamePossibleTeam
+  }
+  result {
+    winner {
+      value
+    }
+    outcome {
+      name
+      value
+    }
+    home {
+      ...GameGameTeamResult
+    }
+    away {
+      ...GameGameTeamResult
+    }
+  }
+  status {
+    name
+    value
+  }
+  gameType {
+    name
+    value
+    eScoringSettings {
+      dismissalsPerBatter
+      legalBallsPerOver
+    }
+  }
+  isStale
+  pool {
+    id
+    name
+  }
+  round {
+    id
+    isFinalsRound
+  }
+  liveStreamingEnabled
+  liveStream {
+    url
+    provider
+    videoId
+  }
+}
+
+fragment GameAllocation on DiscoverAllocation {
+  dateTimeList {
+    date
+    time
+  }
+  timezone
+  court {
+    id
+    name
+    venue {
+      id
+      name
+    }
+  }
+}
+
+fragment GamePossibleTeam on DiscoverPossibleTeam {
+  ... on ProvisionalTeam {
+    name
+  }
+  ... on DiscoverTeam {
+    id
+    name
+    logo {
+      ...Image
+    }
+  }
+}
+
+fragment GameGameTeamResult on GameTeamResult {
+  statistics {
+    count
+    type {
+      value
+    }
+  }
+  periods {
+    type
+    closureStatus
+    period {
+      value
+    }
+    statistics {
+      count
+      type {
+        value
+      }
+    }
+  }
+  gameOutcomeDescription
+  outcome {
+    name
+    value
+  }
+}

@@ -1,0 +1,19 @@
+---
+description: Always include jersey numbers when naming players in scouting reports and PlayHQ analysis
+globs:
+  - docs/**
+  - operations/**
+  - src/**
+---
+
+# Player names must include jersey numbers
+
+When writing scouting reports, match previews, or any player analysis from PlayHQ data:
+
+1. **Always use `#Number FirstName LastName`** — e.g. `#12 Jane Smith`, not `Jane` or `Jane Smith` alone.
+2. **Fetch numbers from game box scores** — use `playerNumber` on `discoverGame.statistics.{home,away}.players` via the `get_game` MCP tool (`operations/discover-game.graphql`).
+3. **Never use first-name-only shorthand** after a player has been introduced — repeat the full `#Number Name` every time.
+4. **Roster quick-reference table** — list all players with `#Number Name` at the top of opponent scouts.
+5. **If number unknown** — write `#? FirstName LastName` and note that the number was not in box-score data.
+
+Example: "Shut down #12 Jane Smith" not "Shut down Jane".
