@@ -78,5 +78,15 @@ Use this in Claude config:
   "command": "node",
   "args": ["$DistPathForward"]
 
+Antigravity CLI (project): create .agents\mcp_config.json in this repo
+Antigravity CLI (global): $env:USERPROFILE\.gemini\config\mcp_config.json
+
+Use this in Antigravity MCP config:
+  "command": "node",
+  "args": ["$DistPathForward"],
+  "cwd": "$($Root -replace '\\', '/')"
+
+Migrating from Gemini CLI? Run: agy plugin import gemini
+
 See README.md for full setup details.
 "@

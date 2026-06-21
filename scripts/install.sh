@@ -94,5 +94,15 @@ Use this command in Claude config:
 Or run directly:
   node "$ROOT/dist/mcp.cjs"
 
+Antigravity CLI (project): create .agents/mcp_config.json in this repo
+Antigravity CLI (global): ~/.gemini/config/mcp_config.json
+
+Use this in Antigravity MCP config:
+  "command": "/bin/bash",
+  "args": ["$ROOT/scripts/run-mcp.sh"],
+  "cwd": "$ROOT"
+
+Migrating from Gemini CLI? Run: agy plugin import gemini
+
 See README.md for full setup details.
 EOF

@@ -14,7 +14,7 @@ Community-maintained MCP server that talks to PlayHQ GraphQL endpoints. Runs **l
 
 **This project is for developers exploring PlayHQ APIs on their own machine.** It is not a supported integration, not a product, and not intended for anyone other than the person who cloned and configured it locally.
 
-Intended for **personal, local development** with MCP clients (Cursor, Claude Desktop, Gemini CLI). **Do not use for:**
+Intended for **personal, local development** with MCP clients (Cursor, Claude Desktop, Antigravity CLI, Gemini CLI). **Do not use for:**
 
 - Production or user-facing services
 - Publishing, scraping, or redistributing PlayHQ data
@@ -65,7 +65,7 @@ Add a smoke test after install (optional):
 | macOS / Linux | `./scripts/install.sh --smoke-test` |
 | Windows (PowerShell) | `.\scripts\install.ps1 -SmokeTest` |
 
-The script prints Claude Desktop and Gemini CLI config hints for your machine when it finishes.
+The script prints Claude Desktop and Antigravity CLI config hints for your machine when it finishes.
 
 ### Option B — manual install
 
@@ -214,7 +214,7 @@ After code changes: `pnpm run build`, then reload MCP.
 
 ## Gemini CLI
 
-**Local dev setup only** — [Gemini CLI](https://google-gemini.github.io/gemini-cli/docs/tools/mcp-server.html) supports stdio MCP on your machine. (The Gemini web app does **not** support custom local MCP servers.)
+**Local dev setup only** — [Gemini CLI](https://google-gemini.github.io/gemini-cli/docs/tools/mcp-server.html) supports stdio MCP on your machine. (The Gemini web app does **not** support custom local MCP servers.) Google is transitioning Gemini CLI to [Antigravity CLI](#antigravity-cli); prefer Antigravity CLI for new setups.
 
 1. Complete [Setup](#setup) (Option A or Option B).
 2. Add the server to Gemini CLI — **one** of the following:
@@ -288,6 +288,75 @@ After code changes: `pnpm run build`, then reload MCP.
 4. List tools to verify: `gemini mcp list` or ask Gemini to use a PlayHQ tool (e.g. `list_organisations`).
 
 After code changes: `pnpm run build`, then restart Gemini CLI or refresh MCP.
+
+## Antigravity CLI
+
+**Local dev setup only** — [Antigravity CLI](https://antigravity.google/docs/cli-using) (`agy`) supports stdio MCP on your machine. It is the successor to Gemini CLI; see [Migrating from Gemini CLI](https://antigravity.google/docs/gcli-migration) if you are upgrading.
+
+1. Complete [Setup](#setup) (Option A or Option B).
+2. Add the server to Antigravity CLI — **one** of the following:
+
+   **Option 1 — project config (recommended for this repo)**
+
+   Create `.agents/mcp_config.json` in this repo (do not commit it if it contains machine-specific paths):
+
+   **macOS / Linux**
+
+   ```json
+   {
+     "mcpServers": {
+       "playhq": {
+         "command": "/bin/bash",
+         "args": ["/absolute/path/to/playhq-mcp/scripts/run-mcp.sh"],
+         "cwd": "/absolute/path/to/playhq-mcp"
+       }
+     }
+   }
+   ```
+
+   **Windows**
+
+   ```json
+   {
+     "mcpServers": {
+       "playhq": {
+         "command": "node",
+         "args": ["C:/Users/You/path/to/playhq-mcp/dist/mcp.cjs"],
+         "cwd": "C:/Users/You/path/to/playhq-mcp"
+       }
+     }
+   }
+   ```
+
+   **Option 2 — global config**
+
+   | Scope | Config file |
+   |-------|-------------|
+   | User-wide | `~/.gemini/config/mcp_config.json` |
+   | Windows user-wide | `%USERPROFILE%\.gemini\config\mcp_config.json` |
+
+   Use the same `playhq` entry as above inside `mcpServers`.
+
+   **Migrating from Gemini CLI:** run `agy plugin import gemini` to convert extensions and MCP definitions, or move servers from `~/.gemini/settings.json` into `mcp_config.json` manually. Local stdio servers (`command` + `args`) need no schema changes; remote servers must use `serverUrl` instead of `url` or `httpUrl`.
+
+   Override tenant if needed:
+
+   ```json
+   "env": { "PLAYHQ_TENANT": "your-tenant-slug" }
+   ```
+
+3. Start Antigravity CLI from this repo (for project config) or restart it after editing global config.
+4. List tools to verify: run `/mcp` inside `agy`, or ask the agent to use a PlayHQ tool (e.g. `list_organisations`).
+
+After code changes: `pnpm run build`, then restart Antigravity CLI.
+
+### Antigravity CLI troubleshooting
+
+| Error | Fix |
+|-------|-----|
+| Server not listed | Use `.agents/mcp_config.json` in the repo root, or `~/.gemini/config/mcp_config.json` globally — not `.antigravitycli/mcp_config.json` |
+| Remote MCP fails silently | Rename `url` / `httpUrl` to `serverUrl` in `mcp_config.json` |
+| Module / import errors | Run `pnpm run build` — MCP runs `dist/mcp.cjs` |
 
 ## Configuration
 
