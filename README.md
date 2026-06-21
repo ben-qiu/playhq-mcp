@@ -65,7 +65,7 @@ Add a smoke test after install (optional):
 | macOS / Linux | `./scripts/install.sh --smoke-test` |
 | Windows (PowerShell) | `.\scripts\install.ps1 -SmokeTest` |
 
-The script prints Claude Desktop and Antigravity CLI config hints for your machine when it finishes.
+The script creates `.cursor/mcp.json` and `.agents/mcp_config.json` if missing, and prints Claude Desktop config hints when it finishes.
 
 ### Option B — manual install
 
@@ -293,12 +293,25 @@ After code changes: `pnpm run build`, then restart Gemini CLI or refresh MCP.
 
 **Local dev setup only** — [Antigravity CLI](https://antigravity.google/docs/cli-using) (`agy`) supports stdio MCP on your machine. It is the successor to Gemini CLI; see [Migrating from Gemini CLI](https://antigravity.google/docs/gcli-migration) if you are upgrading.
 
-1. Complete [Setup](#setup) (Option A or Option B).
+1. Complete [Setup](#setup) (Option A creates `.agents/mcp_config.json` for you).
 2. Add the server to Antigravity CLI — **one** of the following:
 
-   **Option 1 — project config (recommended for this repo)**
+   **Option 1 — setup script (recommended)**
 
-   Create `.agents/mcp_config.json` in this repo (do not commit it if it contains machine-specific paths):
+   Run from the repo root after [Setup](#setup):
+
+   | Platform | Command |
+   |----------|---------|
+   | macOS / Linux | `./scripts/setup-antigravity.sh` |
+   | Windows (PowerShell) | `.\scripts\setup-antigravity.ps1` |
+   | Windows (Command Prompt) | `scripts\setup-antigravity.cmd` |
+   | Any (via pnpm) | `pnpm run setup:antigravity` |
+
+   This writes `.agents/mcp_config.json` with absolute paths for this machine. Use `--force` (or `-Force` on PowerShell) to update an existing file. Use `--global` (or `-Global`) to merge the `playhq` entry into `~/.gemini/config/mcp_config.json` instead.
+
+   **Option 2 — manual project config**
+
+   Create `.agents/mcp_config.json` in this repo (do not commit it — it contains machine-specific paths):
 
    **macOS / Linux**
 
@@ -328,7 +341,7 @@ After code changes: `pnpm run build`, then restart Gemini CLI or refresh MCP.
    }
    ```
 
-   **Option 2 — global config**
+   **Option 3 — manual global config**
 
    | Scope | Config file |
    |-------|-------------|

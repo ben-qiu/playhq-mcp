@@ -4,3 +4,4 @@ docs/
 .pnpm-store/
 .env
 .cursor/mcp.json
+.agents/mcp_config.json
