@@ -17,7 +17,8 @@
     "mcp": "tsx src/index.ts",
     "typecheck": "tsc --noEmit",
     "postinstall": "node scripts/build-mcp.mjs",
-    "smoke-test": "tsx scripts/smoke-test.ts"
+    "smoke-test": "tsx scripts/smoke-test.ts",
+    "setup:antigravity": "node scripts/setup-antigravity.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.0",

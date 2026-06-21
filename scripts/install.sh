@@ -10,7 +10,7 @@ for arg in "$@"; do
     --smoke-test) RUN_SMOKE_TEST=1 ;;
     -h | --help)
       echo "Usage: $0 [--smoke-test]"
-      echo "  Installs dependencies, builds dist/mcp.cjs, and creates .cursor/mcp.json if missing."
+      echo "  Installs dependencies, builds dist/mcp.cjs, and creates .cursor/mcp.json and .agents/mcp_config.json if missing."
       exit 0
       ;;
     *)
@@ -65,6 +65,8 @@ else
   echo "==> .cursor/mcp.json already exists — left unchanged"
 fi
 
+node "$ROOT/scripts/setup-antigravity.mjs"
+
 if (( RUN_SMOKE_TEST )); then
   echo "==> Running smoke test..."
   if command -v pnpm >/dev/null 2>&1; then
@@ -93,6 +95,13 @@ Use this command in Claude config:
 
 Or run directly:
   node "$ROOT/dist/mcp.cjs"
+
+Antigravity CLI: start agy from this repo and run /mcp to verify.
+  Config: .agents/mcp_config.json
+  Re-run: ./scripts/setup-antigravity.sh [--force]
+  Global: ./scripts/setup-antigravity.sh --global
+
+Migrating from Gemini CLI? Run: agy plugin import gemini
 
 See README.md for full setup details.
 EOF

@@ -52,6 +52,8 @@ if (-not (Test-Path $McpConfig)) {
     Write-Host '==> .cursor\mcp.json already exists — left unchanged'
 }
 
+& node (Join-Path $Root 'scripts/setup-antigravity.mjs')
+
 if ($SmokeTest) {
     Write-Host '==> Running smoke test...'
     if (Get-Command pnpm -ErrorAction SilentlyContinue) {
@@ -77,6 +79,13 @@ Claude Desktop: edit
 Use this in Claude config:
   "command": "node",
   "args": ["$DistPathForward"]
+
+Antigravity CLI: start agy from this repo and run /mcp to verify.
+  Config: .agents\mcp_config.json
+  Re-run: .\scripts\setup-antigravity.ps1 [-Force]
+  Global: .\scripts\setup-antigravity.ps1 -Global
+
+Migrating from Gemini CLI? Run: agy plugin import gemini
 
 See README.md for full setup details.
 "@
